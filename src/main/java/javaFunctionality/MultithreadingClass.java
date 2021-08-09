@@ -7,10 +7,33 @@ public class MultithreadingClass {
         Thread t = new Thread(mt);
         t.setName("First thread");
 
-        Thread t2 = new Thread(mt);
+        Thread t2 = new Thread(() -> {
+            mt.printSt();
+        });
         t2.setName("Second thread");
-        t.start();
-        t2.start();
+//        t.start();
+//        t2.start();
+
+
+        Thread t3 = new Thread(() -> {
+            synchronized ("m"){
+                for(int i=0;i<100;i++){
+                    System.out.println(Thread.currentThread().getName()+" ->"+ i);
+                }
+            }
+
+        });
+
+        Thread t4 = new Thread(() -> {
+            synchronized ("m"){
+                for(int i=0;i<100;i++){
+                    System.out.println(Thread.currentThread().getName()+" ->"+ i);
+                }
+            }
+        });
+
+        t3.start();
+        t4.start();
     }
 
 }
@@ -20,9 +43,12 @@ class Multithreading implements Runnable {
     @Override
     public  void run(){
         //balance = balance - 100;
-        for(int i=0;i<30;i++){
+        printSt();
+    }
+
+    public synchronized void printSt(){
+        for(int i=0;i<100;i++){
             System.out.println(Thread.currentThread().getName()+" ->"+ i);
         }
-
     }
 }
