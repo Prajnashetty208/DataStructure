@@ -24,4 +24,32 @@ public class Quicksort {
         System.out.println(list.stream().sorted().collect(Collectors.toList()));
 
     }
+    public int partition(int l, int r, int[] a){
+        int pivot = a[l];
+        int i= l;
+        int j= r;
+        while(i<j){
+            do{
+                i++;
+            }while(a[i]<=pivot);
+            do{
+                j++;
+            }while(a[j]>=pivot);
+            if(i<j){
+                int b = a[i];
+                a[i]=a[j];
+                a[j]=b;
+            }
+        }
+        return i;
+
+    }
+
+    public void quickSort(int l, int r, int[] arr){
+        if(l<r){
+            int p = partition(l,r,arr);
+            quickSort(l,p-1,arr);
+            quickSort(p+1,r,arr);
+        }
+    }
 }
